@@ -1,4 +1,4 @@
-#include "server.h"
+﻿#include "server.h"
 #include "ui_server.h"
 #include <QtNetwork>
 
@@ -27,7 +27,7 @@ void Server::start()
     totalBytes = 0;
     bytesReceived = 0;
     fileNameSize = 0;
-    ui->serverStatusLabel->setText(tr("監聽"));
+    ui->serverStatusLabel->setText(QStringLiteral("監聽"));
     ui->serverProgressBar->reset();
 }
 
@@ -38,7 +38,7 @@ void Server::acceptConnection()
             this, SLOT(updateServerProgress()));
     connect(tcpServerConnection, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
-    ui->serverStatusLabel->setText(tr("接受連接"));
+    ui->serverStatusLabel->setText(QStringLiteral("接受連接"));
     // 關閉服務器，不再進行監聽
     tcpServer.close();
 }
@@ -60,8 +60,7 @@ void Server::updateServerProgress()
                 && (fileNameSize != 0)) {
             // 接收文件名，並建立文件
             in >> fileName;
-            ui->serverStatusLabel->setText(tr("接收文件 %1 …")
-                                           .arg(fileName));
+            ui->serverStatusLabel->setText(QStringLiteral("接收文件 %1 ...").arg(fileName));
             bytesReceived += fileNameSize;
             localFile = new QFile(fileName);
             if (!localFile->open(QFile::WriteOnly)) {
@@ -87,7 +86,7 @@ void Server::updateServerProgress()
         tcpServerConnection->close();
         localFile->close();
         ui->startButton->setEnabled(true);
-        ui->serverStatusLabel->setText(tr("接收文件 %1 成功！").arg(fileName));
+        ui->serverStatusLabel->setText(QStringLiteral("接收文件 %1 成功！").arg(fileName));
     }
 }
 
@@ -96,7 +95,7 @@ void Server::displayError(QAbstractSocket::SocketError socketError)
     qDebug() << tcpServerConnection->errorString();
     tcpServerConnection->close();
     ui->serverProgressBar->reset();
-    ui->serverStatusLabel->setText(tr("服務端就緒"));
+    ui->serverStatusLabel->setText(QStringLiteral("服務端就緒"));
     ui->startButton->setEnabled(true);
 }
 

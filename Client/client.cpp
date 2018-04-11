@@ -1,4 +1,4 @@
-#include "client.h"
+﻿#include "client.h"
 #include "ui_client.h"
 #include <QtNetwork>
 #include <QFileDialog>
@@ -34,7 +34,7 @@ void Client::openFile()
     fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty()) {
         ui->sendButton->setEnabled(true);
-        ui->clientStatusLabel->setText(tr("打開文件 %1 成功！").arg(fileName));
+        ui->clientStatusLabel->setText(QStringLiteral("打開文件 %1 成功！").arg(fileName));
     }
 }
 
@@ -44,7 +44,7 @@ void Client::send()
 
     // 初始化已發送字節為0
     bytesWritten = 0;
-    ui->clientStatusLabel->setText(tr("連接中..."));
+    ui->clientStatusLabel->setText(QStringLiteral("連接中..."));
     tcpClient->connectToHost(ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
 }
 
@@ -75,7 +75,7 @@ void Client::startTransfer()
     // 發送完文件頭結構後剩餘數據的大小
     bytesToWrite = totalBytes - tcpClient->write(outBlock);
 
-    ui->clientStatusLabel->setText(tr("已連接"));
+    ui->clientStatusLabel->setText(QStringLiteral("已連接"));
     outBlock.resize(0);
 }
 
@@ -103,7 +103,7 @@ void Client::updateClientProgress(qint64 numBytes)
     ui->clientProgressBar->setValue(bytesWritten);
     // 如果發送完畢
     if (bytesWritten == totalBytes) {
-        ui->clientStatusLabel->setText(tr("傳送文件 %1 成功").arg(fileName));
+        ui->clientStatusLabel->setText(QStringLiteral("傳送文件 %1 成功").arg(fileName));
         localFile->close();
         tcpClient->close();
     }
@@ -114,14 +114,14 @@ void Client::displayError(QAbstractSocket::SocketError)
     qDebug() << tcpClient->errorString();
     tcpClient->close();
     ui->clientProgressBar->reset();
-    ui->clientStatusLabel->setText(tr("客戶端就緒"));
+    ui->clientStatusLabel->setText(QStringLiteral("客戶端就緒"));
     ui->sendButton->setEnabled(true);
 }
 
 void Client::on_openButton_clicked()
 {
     ui->clientProgressBar->reset();
-    ui->clientStatusLabel->setText(tr("狀態：等待打開文件！"));
+    ui->clientStatusLabel->setText(QStringLiteral("狀態：等待打開文件！"));
     openFile();
 }
 
