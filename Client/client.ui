@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>300</width>
     <height>300</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="openButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>260</y>
      <width>99</width>
      <height>27</height>
@@ -29,7 +29,7 @@
   <widget class="QPushButton" name="sendButton">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>120</x>
      <y>260</y>
      <width>99</width>
      <height>27</height>
@@ -42,9 +42,9 @@
   <widget class="QProgressBar" name="clientProgressBar">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>100</y>
-     <width>300</width>
+     <x>10</x>
+     <y>50</y>
+     <width>281</width>
      <height>23</height>
     </rect>
    </property>
@@ -55,14 +55,17 @@
   <widget class="QLabel" name="clientStatusLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>140</y>
-     <width>350</width>
-     <height>110</height>
+     <x>10</x>
+     <y>80</y>
+     <width>281</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
    </property>
    <property name="text">
     <string>請拖曳到此處</string>
@@ -74,8 +77,8 @@
   <widget class="QLineEdit" name="hostLineEdit">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
+     <x>10</x>
+     <y>10</y>
      <width>120</width>
      <height>27</height>
     </rect>
@@ -87,8 +90,8 @@
   <widget class="QLineEdit" name="portLineEdit">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>50</y>
+     <x>140</x>
+     <y>10</y>
      <width>80</width>
      <height>27</height>
     </rect>
