@@ -2,6 +2,9 @@
 #include "ui_client.h"
 #include <QtNetwork>
 #include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 Client::Client(QWidget *parent) :
     QDialog(parent),
@@ -22,6 +25,8 @@ Client::Client(QWidget *parent) :
     connect(tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
     ui->sendButton->setEnabled(false);
+
+    setAcceptDrops(true);
 }
 
 Client::~Client()
@@ -60,8 +65,7 @@ void Client::startTransfer()
 
     QDataStream sendOut(&outBlock, QIODevice::WriteOnly);
     sendOut.setVersion(QDataStream::Qt_4_0);
-    QString currentFileName = fileName.right(fileName.size()
-                                             - fileName.lastIndexOf('/')-1);
+    QString currentFileName = fileName.right(fileName.size() - fileName.lastIndexOf('/')-1);
     // 保留總大小信息空間、文件名大小信息空間，然後輸入文件名
     sendOut << qint64(0) << qint64(0) << currentFileName;
 
@@ -128,4 +132,29 @@ void Client::on_openButton_clicked()
 void Client::on_sendButton_clicked()
 {
     send();
+}
+
+void Client::dragEnterEvent(QDragEnterEvent *event)
+{
+    qDebug() << "dragEnterEvent";
+    if (event->mimeData()->hasFormat("text/uri-list")) {
+        event->acceptProposedAction();
+    }
+}
+
+void Client::dropEvent(QDropEvent *event)
+{
+    qDebug() << "dropEvent";
+    QList<QUrl> urls = event->mimeData()->urls();
+    if (urls.isEmpty()) {
+        return;
+    }
+
+    QString fileName = urls.first().toLocalFile();
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    ui->sendButton->setEnabled(true);
+    ui->clientStatusLabel->setText(QStringLiteral("準備傳送 %1").arg(fileName));
 }

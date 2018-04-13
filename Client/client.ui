@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>210</y>
+     <y>260</y>
      <width>99</width>
      <height>27</height>
     </rect>
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>210</y>
+     <y>260</y>
      <width>99</width>
      <height>27</height>
     </rect>
@@ -58,11 +58,14 @@
      <x>30</x>
      <y>140</y>
      <width>350</width>
-     <height>42</height>
+     <height>110</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>請拖曳到此處</string>
    </property>
    <property name="wordWrap">
     <bool>true</bool>
