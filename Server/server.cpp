@@ -50,14 +50,12 @@ void Server::updateServerProgress()
 
     // 如果接收到的數據小於16個字節，保存到來的文件頭結構
     if (bytesReceived <= sizeof(qint64)*2) {
-        if ((tcpServerConnection->bytesAvailable() >= sizeof(qint64)*2)
-                && (fileNameSize == 0)) {
+        if ((tcpServerConnection->bytesAvailable() >= sizeof(qint64)*2) && (fileNameSize == 0)) {
             // 接收數據總大小信息和文件名大小信息
             in >> totalBytes >> fileNameSize;
             bytesReceived += sizeof(qint64) * 2;
         }
-        if ((tcpServerConnection->bytesAvailable() >= fileNameSize)
-                && (fileNameSize != 0)) {
+        if ((tcpServerConnection->bytesAvailable() >= fileNameSize) && (fileNameSize != 0)) {
             // 接收文件名，並建立文件
             in >> fileName;
             ui->serverStatusLabel->setText(QStringLiteral("接收文件 %1 ...").arg(fileName));
