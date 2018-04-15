@@ -150,7 +150,7 @@ void Client::dropEvent(QDropEvent *event)
         return;
     }
 
-    QString fileName = urls.first().toLocalFile();
+    fileName = urls.first().toLocalFile();
     if (fileName.isEmpty()) {
         return;
     }
