@@ -8,6 +8,11 @@ Server::Server(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // show git version on window title
+    QString version(GIT_VERSION);
+    QString winTitle = QStringLiteral("FileTransferServer ") + version;
+    this->setWindowTitle(winTitle);
+
     connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 

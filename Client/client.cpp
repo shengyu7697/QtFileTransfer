@@ -12,6 +12,11 @@ Client::Client(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // show git version on window title
+    QString version(GIT_VERSION);
+    QString winTitle = QStringLiteral("FileTransferClient ") + version;
+    this->setWindowTitle(winTitle);
+
     payloadSize = 64*1024; // 64KB
     totalBytes = 0;
     bytesWritten = 0;
