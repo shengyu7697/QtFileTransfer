@@ -90,6 +90,10 @@ void Server::updateServerProgress()
         localFile->close();
         ui->startButton->setEnabled(true);
         ui->serverStatusLabel->setText(QStringLiteral("接收文件 %1 成功！").arg(fileName));
+
+        // 完成時，是否繼續自動 start
+        if (ui->keepStart->isChecked())
+            start();
     }
 }
 

@@ -74,6 +74,19 @@
     <string>6666</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="keepStart">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>10</y>
+     <width>97</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Keep Start</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
