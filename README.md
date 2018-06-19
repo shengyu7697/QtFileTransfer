@@ -12,6 +12,7 @@ Demo on ubuntu.
 
 ## Todo
 * Support text edit (顯示歷史訊息)  
+* Restore ip address and port last time  
 
 ## System Requirement
 Windows, Linux  
