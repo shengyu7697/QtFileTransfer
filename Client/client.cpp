@@ -150,6 +150,9 @@ void Client::dragEnterEvent(QDragEnterEvent *event)
 void Client::dropEvent(QDropEvent *event)
 {
     qDebug() << "dropEvent";
+
+    ui->clientProgressBar->reset();
+
     QList<QUrl> urls = event->mimeData()->urls();
     if (urls.isEmpty()) {
         return;
