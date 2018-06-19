@@ -2,6 +2,9 @@ QtFileTransfer
 ==============
 QtFileTransfer 是一款方便、簡單、快速的跨平台檔案傳輸工具.  
 
+Demo on ubuntu.  
+![demo](https://raw.github.com/shengyu7697/QtFileTransfer/master/demo.gif)  
+
 ## Features
 * 支援檔案拖曳至視窗 (Client)  
 * 跨平台檔案傳輸 (Windows and Linux)  
