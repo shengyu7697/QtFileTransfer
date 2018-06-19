@@ -25,7 +25,7 @@ protected:
     void dropEvent(QDropEvent *event);
 
 private slots:
-    void openFile();
+    bool openFile(QString &fileName);
     void send();
     void startTransfer();
     void updateClientProgress(qint64);

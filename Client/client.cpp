@@ -39,13 +39,14 @@ Client::~Client()
     delete ui;
 }
 
-void Client::openFile()
+bool Client::openFile(QString &fileName)
 {
-    fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty()) {
-        ui->sendButton->setEnabled(true);
-        ui->clientStatusLabel->setText(QStringLiteral("打開文件 %1 成功！").arg(fileName));
-    }
+    if (fileName.isEmpty())
+        return false;
+
+    ui->sendButton->setEnabled(true);
+    ui->clientStatusLabel->setText(QStringLiteral("準備傳送 %1").arg(fileName));
+    return true;
 }
 
 void Client::send()
@@ -131,7 +132,12 @@ void Client::on_openButton_clicked()
 {
     ui->clientProgressBar->reset();
     ui->clientStatusLabel->setText(QStringLiteral("狀態：等待打開文件！"));
-    openFile();
+
+    fileName = QFileDialog::getOpenFileName(this);
+    if (!openFile(fileName)) {
+        qDebug() << "Error: openFile failed";
+        return;
+    }
 }
 
 void Client::on_sendButton_clicked()
@@ -155,14 +161,13 @@ void Client::dropEvent(QDropEvent *event)
 
     QList<QUrl> urls = event->mimeData()->urls();
     if (urls.isEmpty()) {
+        qDebug() << "Error: urls is empty";
         return;
     }
 
     fileName = urls.first().toLocalFile();
-    if (fileName.isEmpty()) {
+    if (!openFile(fileName)) {
+        qDebug() << "Error: openFile failed";
         return;
     }
-
-    ui->sendButton->setEnabled(true);
-    ui->clientStatusLabel->setText(QStringLiteral("準備傳送 %1").arg(fileName));
 }
