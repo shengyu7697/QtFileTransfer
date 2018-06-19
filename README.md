@@ -1,7 +1,5 @@
 QtFileTransfer
 ==============
-
-## Introduction
 QtFileTransfer 是一款方便、簡單、快速的跨平台檔案傳輸工具.  
 
 ## Features
