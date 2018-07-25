@@ -9,6 +9,7 @@ Demo on ubuntu.
 * 支援檔案拖曳至視窗 (Client)  
 * 跨平台檔案傳輸 (Windows and Linux)  
 * 顯示傳輸進度  
+* Server 提示本機 ip address  
 
 ## Todo
 * Support text edit (顯示歷史訊息)  

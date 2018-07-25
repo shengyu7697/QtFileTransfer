@@ -2,6 +2,27 @@
 #include "ui_server.h"
 #include <QtNetwork>
 
+QString getIpAddr()
+{
+    QString ipAddr;
+
+    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+    // use the first non-localhost IPv4 address
+    for (int i = 0; i < ipAddressesList.size(); ++i) {
+        if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
+            ipAddressesList.at(i).toIPv4Address()) {
+            ipAddr = ipAddressesList.at(i).toString();
+            break;
+        }
+    }
+
+    // if we did not find one, use IPv4 localhost
+    if (ipAddr.isEmpty())
+        ipAddr = QHostAddress(QHostAddress::LocalHost).toString();
+
+    return ipAddr; // 獲取本機正在使用的IP地址
+}
+
 Server::Server(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Server)
@@ -14,6 +35,9 @@ Server::Server(QWidget *parent) :
     this->setWindowTitle(winTitle);
 
     connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+
+    QString ipAddr = getIpAddr();
+    ui->serverStatusLabel->setText(QStringLiteral("本機 ip: %1\n按 start 開始監聽").arg(ipAddr));
 }
 
 Server::~Server()
