@@ -12,7 +12,7 @@ namespace Ui {
 class Client;
 }
 
-class Client : public QDialog
+class Client : public QWidget
 {
     Q_OBJECT
 

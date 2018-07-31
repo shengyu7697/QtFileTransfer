@@ -12,7 +12,7 @@ namespace Ui {
 class Server;
 }
 
-class Server : public QDialog
+class Server : public QWidget
 {
     Q_OBJECT
 

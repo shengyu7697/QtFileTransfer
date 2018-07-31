@@ -24,7 +24,7 @@ QString getIpAddr()
 }
 
 Server::Server(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::Server)
 {
     ui->setupUi(this);

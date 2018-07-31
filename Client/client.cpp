@@ -7,7 +7,7 @@
 #include <QMimeData>
 
 Client::Client(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::Client)
 {
     ui->setupUi(this);
