@@ -6,6 +6,7 @@ Demo on ubuntu.
 ![demo](https://raw.github.com/shengyu7697/QtFileTransfer/master/demo.gif)  
 
 ## Features
+* 支援大型檔案傳輸 > 4GB  
 * 支援檔案拖曳至視窗 (Client)  
 * 跨平台檔案傳輸 (Windows and Linux)  
 * 顯示傳輸進度  
@@ -14,9 +15,10 @@ Demo on ubuntu.
 ## Todo
 * Support text edit (顯示歷史訊息)  
 * Restore ip address and port last time  
+* 傳輸檔案佇列  
 
 ## System Requirement
-Windows, Linux  
+Windows, Linux or macOS  
 
 ## Develop Environment
 * Qt5  
