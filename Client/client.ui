@@ -14,22 +14,6 @@
    <string>Client</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0" colspan="4">
-    <widget class="QLabel" name="clientStatusLabel">
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="text">
-      <string>請拖曳到此處</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -42,13 +26,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="5" column="0">
-    <widget class="QPushButton" name="openButton">
-     <property name="text">
-      <string>open</string>
-     </property>
-    </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLineEdit" name="hostLineEdit">
@@ -64,6 +41,13 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="portLineEdit">
+     <property name="text">
+      <string>6666</string>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="2">
     <widget class="QPushButton" name="sendButton">
      <property name="text">
@@ -71,12 +55,15 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="portLineEdit">
+   <item row="5" column="0">
+    <widget class="QPushButton" name="openButton">
      <property name="text">
-      <string>6666</string>
+      <string>open</string>
      </property>
     </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
   </layout>
  </widget>

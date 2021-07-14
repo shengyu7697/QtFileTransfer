@@ -35,6 +35,8 @@ private slots:
     void on_sendButton_clicked();
 
 private:
+    void appendLog(const QString& text);
+
     Ui::Client *ui;
 
     QTcpSocket *tcpClient;

@@ -29,6 +29,8 @@ private slots:
     void on_startButton_clicked();
 
 private:
+    void appendLog(const QString& text);
+
     Ui::Server *ui;
 
     QTcpServer tcpServer;

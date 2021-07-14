@@ -7,36 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>200</height>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Server</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLineEdit" name="portLineEdit">
-     <property name="text">
-      <string>6666</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="4">
-    <widget class="QLabel" name="serverStatusLabel">
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="text">
-      <string>按 start 開始監聽</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QPushButton" name="startButton">
      <property name="text">
@@ -44,19 +21,29 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
+   <item row="1" column="0" colspan="3">
+    <widget class="QProgressBar" name="serverProgressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLineEdit" name="portLineEdit">
+     <property name="text">
+      <string>6666</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
     <widget class="QCheckBox" name="keepStart">
      <property name="text">
       <string>Keep Start</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="4">
-    <widget class="QProgressBar" name="serverProgressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
+   <item row="2" column="0" colspan="3">
+    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
   </layout>
  </widget>

@@ -32,6 +32,8 @@ Client::Client(QWidget *parent) :
     ui->sendButton->setEnabled(false);
 
     setAcceptDrops(true);
+
+    appendLog(QStringLiteral("請將檔案拖曳到此視窗"));
 }
 
 Client::~Client()
@@ -45,7 +47,7 @@ bool Client::openFile(QString &fileName)
         return false;
 
     ui->sendButton->setEnabled(true);
-    ui->clientStatusLabel->setText(QStringLiteral("準備傳送 %1").arg(fileName));
+    appendLog(QStringLiteral("準備傳送 %1").arg(fileName));
     return true;
 }
 
@@ -55,7 +57,7 @@ void Client::send()
 
     // 初始化已發送字節為0
     bytesWritten = 0;
-    ui->clientStatusLabel->setText(QStringLiteral("連接中..."));
+    appendLog(QStringLiteral("連接中..."));
     tcpClient->connectToHost(ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
 }
 
@@ -64,6 +66,7 @@ void Client::startTransfer()
     localFile = new QFile(fileName);
     if (!localFile->open(QFile::ReadOnly)) {
         qDebug() << "client: open file error!";
+        appendLog("client: open file error!");
         return;
     }
     // 獲取文件大小
@@ -85,7 +88,7 @@ void Client::startTransfer()
     // 發送完文件頭結構後剩餘數據的大小
     bytesToWrite = totalBytes - tcpClient->write(outBlock);
 
-    ui->clientStatusLabel->setText(QStringLiteral("已連接"));
+    appendLog(QStringLiteral("已連接"));
     outBlock.resize(0);
 }
 
@@ -113,7 +116,7 @@ void Client::updateClientProgress(qint64 numBytes)
     ui->clientProgressBar->setValue(bytesWritten);
     // 如果發送完畢
     if (bytesWritten == totalBytes) {
-        ui->clientStatusLabel->setText(QStringLiteral("傳送文件 %1 成功").arg(fileName));
+        appendLog(QStringLiteral("傳送文件 %1 成功").arg(fileName));
         localFile->close();
         tcpClient->close();
     }
@@ -124,18 +127,19 @@ void Client::displayError(QAbstractSocket::SocketError)
     qDebug() << tcpClient->errorString();
     tcpClient->close();
     ui->clientProgressBar->reset();
-    ui->clientStatusLabel->setText(QStringLiteral("客戶端就緒"));
+    appendLog(QStringLiteral("客戶端就緒"));
     ui->sendButton->setEnabled(true);
 }
 
 void Client::on_openButton_clicked()
 {
     ui->clientProgressBar->reset();
-    ui->clientStatusLabel->setText(QStringLiteral("狀態：等待打開文件！"));
+    appendLog(QStringLiteral("狀態：等待打開文件！"));
 
     fileName = QFileDialog::getOpenFileName(this);
     if (!openFile(fileName)) {
         qDebug() << "Error: openFile failed";
+        appendLog("Error: openFile failed");
         return;
     }
 }
@@ -162,12 +166,19 @@ void Client::dropEvent(QDropEvent *event)
     QList<QUrl> urls = event->mimeData()->urls();
     if (urls.isEmpty()) {
         qDebug() << "Error: urls is empty";
+        appendLog("Error: urls is empty");
         return;
     }
 
     fileName = urls.first().toLocalFile();
     if (!openFile(fileName)) {
         qDebug() << "Error: openFile failed";
+        appendLog("Error: openFile failed");
         return;
     }
+}
+
+void Client::appendLog(const QString& text)
+{
+    ui->textBrowser->append(text);
 }
