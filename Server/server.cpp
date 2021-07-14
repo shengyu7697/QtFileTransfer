@@ -1,6 +1,7 @@
 ﻿#include "server.h"
 #include "ui_server.h"
 #include <QtNetwork>
+#include <QMessageBox>
 
 QString getIpAddr()
 {
@@ -49,7 +50,9 @@ void Server::start()
 {
     if (!tcpServer.listen(QHostAddress::Any, ui->portLineEdit->text().toInt())) {
         qDebug() << tcpServer.errorString();
-        close();
+        QMessageBox msgBox;
+        msgBox.setText(tcpServer.errorString());
+        msgBox.exec();
         return;
     }
     ui->startButton->setEnabled(false);
