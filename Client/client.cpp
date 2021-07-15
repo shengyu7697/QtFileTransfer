@@ -38,6 +38,7 @@ Client::Client(QWidget *parent) :
 
 Client::~Client()
 {
+    delete tcpClient;
     delete ui;
 }
 
