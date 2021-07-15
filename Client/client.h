@@ -17,7 +17,7 @@ class Client : public QWidget
     Q_OBJECT
 
 public:
-    explicit Client(QWidget *parent = 0);
+    explicit Client(QWidget *parent = nullptr);
     ~Client();
 
 protected:
@@ -39,7 +39,7 @@ private:
 
     Ui::Client *ui;
 
-    QTcpSocket *tcpClient;
+    QTcpSocket *tcpClient = nullptr;
     QFile *localFile;
     qint64 totalBytes;
     qint64 bytesWritten;

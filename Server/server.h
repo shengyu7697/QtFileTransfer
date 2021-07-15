@@ -17,7 +17,7 @@ class Server : public QWidget
     Q_OBJECT
 
 public:
-    explicit Server(QWidget *parent = 0);
+    explicit Server(QWidget *parent = nullptr);
     ~Server();
 
 private slots:
@@ -34,12 +34,12 @@ private:
     Ui::Server *ui;
 
     QTcpServer tcpServer;
-    QTcpSocket *tcpServerConnection;
+    QTcpSocket *tcpServerConnection = nullptr;
     qint64 totalBytes;
     qint64 bytesReceived;
     qint64 fileNameSize;
     QString fileName;
-    QFile *localFile;
+    QFile *localFile = nullptr;
     QByteArray inBlock;
 };
 

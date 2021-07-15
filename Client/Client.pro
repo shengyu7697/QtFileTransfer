@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = FileTransferClient
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=c++14
+
 win32 {
 GIT_VERSION = $$system(git -C $$_PRO_FILE_PWD_ describe)
 } else {
