@@ -36,6 +36,8 @@ Server::Server(QWidget *parent) :
     this->setWindowTitle(winTitle);
 
     connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+    ui->startButton->setEnabled(true);
+    ui->stopButton->setEnabled(false);
 
     QString ipAddr = getIpAddr();
     appendLog(QStringLiteral("本機 ip: %1\n按 start 開始監聽").arg(ipAddr));
@@ -57,11 +59,24 @@ void Server::start()
         return;
     }
     ui->startButton->setEnabled(false);
+    ui->stopButton->setEnabled(true);
     totalBytes = 0;
     bytesReceived = 0;
     fileNameSize = 0;
     appendLog(QStringLiteral("監聽"));
     ui->serverProgressBar->reset();
+}
+
+void Server::stop()
+{
+    if (tcpServerConnection != nullptr) {
+        tcpServerConnection->close();
+    }
+    tcpServer.close();
+    ui->serverProgressBar->reset();
+    ui->startButton->setEnabled(true);
+    ui->stopButton->setEnabled(false);
+    appendLog(QStringLiteral("停止傳輸"));
 }
 
 void Server::acceptConnection()
@@ -119,27 +134,28 @@ void Server::updateServerProgress()
     if (bytesReceived == totalBytes) {
         tcpServerConnection->close();
         localFile->close();
-        ui->startButton->setEnabled(true);
         appendLog(QStringLiteral("接收文件 %1 成功！").arg(fileName));
 
-        // 完成時，是否繼續自動 start
-        if (ui->keepStart->isChecked())
-            start();
+        // 完成時，繼續自動 start
+        start();
     }
 }
 
 void Server::displayError(QAbstractSocket::SocketError socketError)
 {
-    qDebug() << tcpServerConnection->errorString();
-    tcpServerConnection->close();
-    ui->serverProgressBar->reset();
-    appendLog(QStringLiteral("服務端就緒"));
-    ui->startButton->setEnabled(true);
+    qDebug() << "Error: " << tcpServerConnection->errorString();
+    appendLog("Error: " + tcpServerConnection->errorString());
+    stop();
 }
 
 void Server::on_startButton_clicked()
 {
     start();
+}
+
+void Server::on_stopButton_clicked()
+{
+    stop();
 }
 
 void Server::appendLog(const QString& text)

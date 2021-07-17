@@ -22,11 +22,13 @@ public:
 
 private slots:
     void start();
+    void stop();
     void acceptConnection();
     void updateServerProgress();
     void displayError(QAbstractSocket::SocketError socketError);
 
     void on_startButton_clicked();
+    void on_stopButton_clicked();
 
 private:
     void appendLog(const QString& text);

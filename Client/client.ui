@@ -6,15 +6,60 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>300</height>
+    <width>500</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Client</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
+   <item row="3" column="0" colspan="5">
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLineEdit" name="portLineEdit">
+     <property name="text">
+      <string>6666</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QLineEdit" name="hostLineEdit">
+     <property name="text">
+      <string>127.0.0.1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="openButton">
+     <property name="text">
+      <string>open</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="5">
+    <widget class="QProgressBar" name="clientProgressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QPushButton" name="sendButton">
+     <property name="text">
+      <string>send</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QPushButton" name="stopButton">
+     <property name="text">
+      <string>stop</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -26,44 +71,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLineEdit" name="hostLineEdit">
-     <property name="text">
-      <string>127.0.0.1</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="4">
-    <widget class="QProgressBar" name="clientProgressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="portLineEdit">
-     <property name="text">
-      <string>6666</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="sendButton">
-     <property name="text">
-      <string>send</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QPushButton" name="openButton">
-     <property name="text">
-      <string>open</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
   </layout>
  </widget>

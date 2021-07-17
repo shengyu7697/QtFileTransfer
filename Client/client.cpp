@@ -30,6 +30,7 @@ Client::Client(QWidget *parent) :
     connect(tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
     ui->sendButton->setEnabled(false);
+    ui->stopButton->setEnabled(false);
 
     setAcceptDrops(true);
 
@@ -48,6 +49,7 @@ bool Client::openFile(QString &fileName)
         return false;
 
     ui->sendButton->setEnabled(true);
+    ui->stopButton->setEnabled(false);
     appendLog(QStringLiteral("準備傳送 %1").arg(fileName));
     return true;
 }
@@ -55,11 +57,21 @@ bool Client::openFile(QString &fileName)
 void Client::send()
 {
     ui->sendButton->setEnabled(false);
+    ui->stopButton->setEnabled(true);
 
     // 初始化已發送字節為0
     bytesWritten = 0;
     appendLog(QStringLiteral("連接中..."));
     tcpClient->connectToHost(ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
+}
+
+void Client::stop()
+{
+    tcpClient->close();
+    ui->clientProgressBar->reset();
+    ui->sendButton->setEnabled(true);
+    ui->stopButton->setEnabled(false);
+    appendLog(QStringLiteral("停止傳輸"));
 }
 
 void Client::startTransfer()
@@ -120,16 +132,16 @@ void Client::updateClientProgress(qint64 numBytes)
         appendLog(QStringLiteral("傳送文件 %1 成功").arg(fileName));
         localFile->close();
         tcpClient->close();
+        ui->sendButton->setEnabled(true);
+        ui->stopButton->setEnabled(false);
     }
 }
 
 void Client::displayError(QAbstractSocket::SocketError)
 {
-    qDebug() << tcpClient->errorString();
-    tcpClient->close();
-    ui->clientProgressBar->reset();
-    appendLog(QStringLiteral("客戶端就緒"));
-    ui->sendButton->setEnabled(true);
+    qDebug() << "Error: " << tcpClient->errorString();
+    appendLog("Error: " + tcpClient->errorString());
+    stop();
 }
 
 void Client::on_openButton_clicked()
@@ -148,6 +160,11 @@ void Client::on_openButton_clicked()
 void Client::on_sendButton_clicked()
 {
     send();
+}
+
+void Client::on_stopButton_clicked()
+{
+    stop();
 }
 
 void Client::dragEnterEvent(QDragEnterEvent *event)

@@ -27,12 +27,14 @@ protected:
 private slots:
     bool openFile(QString &fileName);
     void send();
+    void stop();
     void startTransfer();
     void updateClientProgress(qint64);
     void displayError(QAbstractSocket::SocketError);
 
     void on_openButton_clicked();
     void on_sendButton_clicked();
+    void on_stopButton_clicked();
 
 private:
     void appendLog(const QString& text);
