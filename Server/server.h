@@ -29,6 +29,7 @@ private slots:
 
     void on_startButton_clicked();
     void on_stopButton_clicked();
+    void on_chooseDownloadDirectoryButton_clicked();
 
 private:
     void appendLog(const QString& text);
@@ -43,6 +44,8 @@ private:
     QString fileName;
     QFile *localFile = nullptr;
     QByteArray inBlock;
+
+    QString downloadLocation;
 };
 
 #endif // SERVER_H

@@ -2,6 +2,7 @@
 #include "ui_server.h"
 #include <QtNetwork>
 #include <QMessageBox>
+#include <QFileDialog>
 
 QString getIpAddr()
 {
@@ -38,9 +39,14 @@ Server::Server(QWidget *parent) :
     connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
     ui->startButton->setEnabled(true);
     ui->stopButton->setEnabled(false);
+    ui->chooseDownloadDirectoryButton->setEnabled(true);
+    ui->downloadLocationLineEdit->setEnabled(true);
 
     QString ipAddr = getIpAddr();
     appendLog(QStringLiteral("本機 ip: %1\n按 start 開始監聽").arg(ipAddr));
+
+    downloadLocation = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator();
+    ui->downloadLocationLineEdit->setText(downloadLocation);
 }
 
 Server::~Server()
@@ -60,6 +66,8 @@ void Server::start()
     }
     ui->startButton->setEnabled(false);
     ui->stopButton->setEnabled(true);
+    ui->chooseDownloadDirectoryButton->setEnabled(false);
+    ui->downloadLocationLineEdit->setEnabled(false);
     totalBytes = 0;
     bytesReceived = 0;
     fileNameSize = 0;
@@ -76,6 +84,8 @@ void Server::stop()
     ui->serverProgressBar->reset();
     ui->startButton->setEnabled(true);
     ui->stopButton->setEnabled(false);
+    ui->chooseDownloadDirectoryButton->setEnabled(true);
+    ui->downloadLocationLineEdit->setEnabled(true);
     appendLog(QStringLiteral("停止傳輸"));
 }
 
@@ -108,7 +118,8 @@ void Server::updateServerProgress()
             in >> fileName;
             appendLog(QStringLiteral("接收文件 %1 ...").arg(fileName));
             bytesReceived += fileNameSize;
-            localFile = new QFile(fileName);
+            appendLog(QStringLiteral("開檔 %1 ...").arg(downloadLocation + fileName));
+            localFile = new QFile(downloadLocation + fileName);
             if (!localFile->open(QFile::WriteOnly)) {
                 qDebug() << "server: open file error!";
                 appendLog(QStringLiteral("server: open file error!"));
@@ -135,6 +146,7 @@ void Server::updateServerProgress()
         tcpServerConnection->close();
         localFile->close();
         appendLog(QStringLiteral("接收文件 %1 成功！").arg(fileName));
+        appendLog(QStringLiteral("儲存位置 %1！").arg(downloadLocation + fileName));
 
         // 完成時，繼續自動 start
         start();
@@ -156,6 +168,17 @@ void Server::on_startButton_clicked()
 void Server::on_stopButton_clicked()
 {
     stop();
+}
+
+void Server::on_chooseDownloadDirectoryButton_clicked()
+{
+    appendLog(QStringLiteral("開啟儲存資料夾..."));
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                    QStandardPaths::writableLocation(QStandardPaths::DownloadLocation),
+                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    downloadLocation = dir + QDir::separator();
+    ui->downloadLocationLineEdit->setText(downloadLocation);
+    appendLog(QStringLiteral("儲存資料夾 %1").arg(downloadLocation));
 }
 
 void Server::appendLog(const QString& text)
